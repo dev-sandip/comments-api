@@ -8,12 +8,6 @@ import (
 	"github.com/dev-sandip/comments-api/internals/utils"
 )
 
-var ErrUserNotFound = errors.New("user not found")
-
-type handler struct {
-	service Service
-}
-
 func NewHandler(service Service) *handler {
 	return &handler{
 		service: service,

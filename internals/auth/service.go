@@ -8,15 +8,6 @@ import (
 	repo "github.com/dev-sandip/comments-api/internals/adapters/postgres/sqlc"
 )
 
-type Service interface {
-	GetUserByEmail(ctx context.Context, email string) (repo.User, error)
-	CreateUser(ctx context.Context, params CreateUserParams) (repo.User, error)
-}
-
-type svc struct {
-	repo repo.Querier
-}
-
 func NewService(repo repo.Querier) Service {
 	return &svc{
 		repo: repo,
