@@ -20,7 +20,12 @@ type handler struct {
 }
 
 type CreateUserParams struct {
-	Name     string `json:"name"`
-	Email    string `json:"email"`
-	Password string `json:"password"`
+	Name     string `json:"name" example:"John Doe"`
+	Email    string `json:"email" example:"test@example.com"`
+	Password string `json:"password" example:"password123"`
+}
+
+type LoginParams struct {
+	Email    string `json:"email" example:"test@example.com"`
+	Password string `json:"password" example:"password123"`
 }

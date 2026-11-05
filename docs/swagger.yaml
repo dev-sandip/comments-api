@@ -1,0 +1,109 @@
+definitions:
+  auth.APIResponse:
+    properties:
+      data: {}
+      message:
+        example: Login successful
+        type: string
+    type: object
+  auth.CreateUserParams:
+    properties:
+      email:
+        example: test@example.com
+        type: string
+      name:
+        example: John Doe
+        type: string
+      password:
+        example: password123
+        type: string
+    type: object
+  auth.LoginParams:
+    properties:
+      email:
+        example: test@example.com
+        type: string
+      password:
+        example: password123
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: Authenticate user and set JWT authentication cookie
+      parameters:
+      - description: Login credentials
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/auth.LoginParams'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Login successful
+          headers:
+            Set-Cookie:
+              description: Authentication cookie
+              type: string
+          schema:
+            $ref: '#/definitions/auth.APIResponse'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/auth.APIResponse'
+        "401":
+          description: Invalid email or password
+          schema:
+            $ref: '#/definitions/auth.APIResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/auth.APIResponse'
+      summary: Login user
+      tags:
+      - Auth
+  /signup:
+    post:
+      consumes:
+      - application/json
+      description: Create a new user account and set JWT authentication cookie
+      parameters:
+      - description: User registration details
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/auth.CreateUserParams'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: User created successfully
+          headers:
+            Set-Cookie:
+              description: Authentication cookie
+              type: string
+          schema:
+            $ref: '#/definitions/auth.APIResponse'
+        "400":
+          description: Bad request
+          schema:
+            $ref: '#/definitions/auth.APIResponse'
+        "409":
+          description: User already exists
+          schema:
+            $ref: '#/definitions/auth.APIResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/auth.APIResponse'
+      summary: Register a new user
+      tags:
+      - Auth
+swagger: "2.0"
